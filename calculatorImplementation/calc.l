@@ -1,5 +1,5 @@
 /*
-	Calculadora v.6 - Sistema de controle de erros de compilação - yyerror + linha
+	Calculadora v.4 - Lê de arquivos ou linha de comando
 	Jucimar Jr
 */
 
@@ -8,10 +8,8 @@
 #include "calc.tab.h" 
 #include <stdlib.h>
 
+void yyerror(char *s); 
 %}
-
-%option case-insensitive
-%option yylineno 
 
 %%
 
@@ -23,13 +21,14 @@
 [*]					{ return TIMES; }
 [(]					{ return P_LEFT;}
 [)]					{ return P_RIGHT;}
+([A-Za-z_][A-Z_0-9a-z]*[ ][=])      {return ATRIBUTION;}
+("var"[ ][A-Za-z_][A-Z_0-9a-z]*[:][ ]("real"|"int"))             {return VAR;}
 [[:space:]]			;
-var                 { return VAR; }
-[A-Za-z]+           { yylval = strdup(yytext); return IDENTIFIER; }
-:                   { return COLON; }
-real                { return REAL_TYPE; }
-.           		{ return INVALID_CHARACTER;}
+.					{ yyerror("Undefined token\n"); }
+
 %%
 
-
-
+int yywrap()
+{
+	return 1;
+}

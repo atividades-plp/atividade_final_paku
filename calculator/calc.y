@@ -1,17 +1,13 @@
 %{
-/* C code */
-
 #define YYSTYPE double
 #include <stdio.h>
 #include <string.h>
 
-extern FILE* yyin;
 extern int yylineno;
-extern char *yytext;
+extern char* yytext;
 
-void yyerror(char *s);
+void yyerror(char* s);
 int yylex();
-int yyparse();
 
 int errors = 0;
 int has_result = 0;
@@ -22,6 +18,8 @@ double result;
 %token NUMBER EOL
 %token PLUS MINUS DIVIDE TIMES
 %token P_LEFT P_RIGHT
+%token VAR COLON REAL
+%token NAME
 %token INVALID_CHARACTER
 
 %left PLUS MINUS
@@ -33,23 +31,23 @@ double result;
 
 %%
 
-STATEMENT:
-    STATEMENT EXPRESSION EOL {
+statement:
+    statement expression EOL {
         if (errors == 0) {
             result = $2;
             has_result = 1;
             printf("Resultado: %f\n", result);
         }
     }
-    |
+    | variable_declaration EOL
     ;
 
-EXPRESSION:
+expression:
     NUMBER {$$ = $1;}
-    |   EXPRESSION PLUS EXPRESSION {$$ = $1 + $3;}
-    |   EXPRESSION MINUS EXPRESSION {$$ = $1 - $3;}
-    |   EXPRESSION TIMES EXPRESSION {$$ = $1 * $3;}
-    |   EXPRESSION DIVIDE EXPRESSION {
+    |   expression PLUS expression {$$ = $1 + $3;}
+    |   expression MINUS expression {$$ = $1 - $3;}
+    |   expression TIMES expression {$$ = $1 * $3;}
+    |   expression DIVIDE expression {
             if ($3 == 0) {
                 yyerror("division by zero");
             }
@@ -57,20 +55,26 @@ EXPRESSION:
                 $$ = $1 / $3;
             }
         }
-    |   P_LEFT EXPRESSION P_RIGHT {$$ = $2;}
+    |   P_LEFT expression P_RIGHT {$$ = $2;}
     |   P_LEFT P_RIGHT {$$ = 0;}
     |   error INVALID_CHARACTER
     ;
 
+variable_declaration:
+    VAR NAME COLON REAL {
+        printf("Variable declaration: %s\n", $2);
+    }
+    ;
+
 %%
 
-void yyerror(char *s)
+void yyerror(char* s)
 {
-    printf("Error: Line: %d  Msg:%s\n", yylineno, s);
+    printf("Error: Line %d: %s\n", yylineno, s);
     errors++;
 }
 
-int main(int argc, char *argv[])
+int main(int argc, char* argv[])
 {
     if (argc == 1)
     {
@@ -79,11 +83,12 @@ int main(int argc, char *argv[])
 
     if (argc == 2)
     {
-        yyin = fopen(argv[1], "r");
+        FILE* f = fopen(argv[1], "r");
 
-        printf("\nCompiling ... %s\n\n", argv[1]);
+        printf("\nCompiling... %s\n", argv[1]);
 
-        do{ yyparse();
+        do {
+            yyparse();
             if (errors == 0) {
                 printf("Success!\n");
             }
@@ -91,10 +96,10 @@ int main(int argc, char *argv[])
                 printf("\n%d error(s) found\n", errors);
                 errors = 0;
             }
-        } while (!feof(yyin));
+        } while (!feof(f));
 
-        fclose(yyin);
+        fclose(f);
+    }
 
     return 0;
-}
 }

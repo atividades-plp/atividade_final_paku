@@ -62,11 +62,8 @@ extern int yydebug;
     TIMES = 263,                   /* TIMES  */
     P_LEFT = 264,                  /* P_LEFT  */
     P_RIGHT = 265,                 /* P_RIGHT  */
-    VAR = 266,                     /* VAR  */
-    COLON = 267,                   /* COLON  */
-    REAL = 268,                    /* REAL  */
-    NAME = 269,                    /* NAME  */
-    INVALID_CHARACTER = 270        /* INVALID_CHARACTER  */
+    ATRIBUTION = 266,              /* ATRIBUTION  */
+    VAR = 267                      /* VAR  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -78,23 +75,9 @@ typedef int YYSTYPE;
 # define YYSTYPE_IS_DECLARED 1
 #endif
 
-/* Location type.  */
-#if ! defined YYLTYPE && ! defined YYLTYPE_IS_DECLARED
-typedef struct YYLTYPE YYLTYPE;
-struct YYLTYPE
-{
-  int first_line;
-  int first_column;
-  int last_line;
-  int last_column;
-};
-# define YYLTYPE_IS_DECLARED 1
-# define YYLTYPE_IS_TRIVIAL 1
-#endif
-
 
 extern YYSTYPE yylval;
-extern YYLTYPE yylloc;
+
 
 int yyparse (void);
 
