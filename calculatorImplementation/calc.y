@@ -1,8 +1,3 @@
-/*
-	Calculadora v.4 - Lê de arquivos ou linha de comando
-	Jucimar Jr
-*/
-
 %{
 #define YYSTYPE double
 #include <stdio.h>
@@ -25,12 +20,12 @@ char name[100];
 %left PLUS MINUS
 %left TIMES DIVIDE
 %left P_LEFT P_RIGHT ATRIBUTION
-%left VAR
+%left VAR PRINT_FUNCTION
 
 %%
 
 STATEMENT:
-	STATEMENT EXPRESSION EOL {$$ = $2; printf("Resultado: %f\n", $2);}
+	STATEMENT EXPRESSION EOL {$$ = $2;}
 	|
 	;
 
@@ -47,7 +42,7 @@ EXPRESSION:
 	|	EXPRESSION DIVIDE EXPRESSION {$$ = $1 / $3;}
     |   ATRIBUTION EXPRESSION {$$ = $2; store_value();}
 	|   VAR { define_variable();}
-	|
+	|   PRINT_FUNCTION {print_value();}
 	;
 %%
 
@@ -59,61 +54,81 @@ void yyerror(char *s)
 void define_variable()
 {
     int i, start, end = 0;
+	char nome[100]= "";
 	int e = 0;
-	char nome[100], tipo[10];
-	printf("Declaração: ");
 	for (i = 0; i < yyleng; i++) {
 		if (yytext[i] == ' ') start = i + 1;
 			if (yytext[i] == ':') 
 			{   
 				end = i;
-				continue;
-			}
-			if (end != 0)
-			{
-              tipo[e] = yytext[i];
-			  e++;
+				break;
 			}
 	}
-	e = 0;
-	printf("%s", tipo);
 	for (i = start; i < end; i++) {
+		if (yytext[i] == "\n")
+		  break;
 		nome[e] = yytext[i];
 		e++;
-		printf("%c", yytext[i]);
 	}
-	strcpy(name, nome);
-	hash_insert(nome, tipo, 14);
-	hash_print();
+	hash_insert(nome, "int", 0);
+	e = 0;
+	printf("\n");
 }
 
 void store_value()
 {
-	int i, start, end;
-	char valor[10];
-	int e = 0;
-	printf("Declaração: ");
-	for (i = 0; i < yyleng; i++) {
-		if (yytext[i] == '=') 
-		{
-		  start = i + 1;
-		  break;
-		}
+	int i;
+	char valor[100] = "";
+	char variable_original[100] = "";
+	int e = 0, int_char;
+	for (i = -4; i < yyleng; i = i - 1) {
+            int_char = yytext[i];
+			if ((int_char >= 48) || (int_char == 95) || (int_char >= 65) || (int_char >= 97))
+            {
+              valor[e] = yytext[i];
+			  e++;
+			}
+			else
+			  break;
+
+	for (int x = 0; x < strlen(valor); x++)
+	{
+		variable_original[x] = valor[strlen(valor) - 1 - x];
 	}
-	for (i = start; i < yyleng; i++) {
-		valor[e] = yytext[i];
-		e++;
-		printf("%c", yytext[i]);
-	}
-	
-	printf("Valor atribuído é %s", valor);
-	int val = hash_get(name);
-	hash_update(name, 20);
-	printf("O valor é %d\n", val);
-	hash_print();
-	printf("\n");
-	
+
 }
+    printf("\n");
+	char value[8] = "";
+	e = 0;
+	for (i = 0; i < yyleng; i++) {
+		{
+			value[e] = yytext[i];
+			e++;
+		}
+}
+
+  hash_update(variable_original, atoi(value));
+}
+
+void print_value(){
+
+	int y = 6, z = 0, data;
+	char letter = yytext[y];
+	char var[100] = "";
+
+	while (letter != ')')
+	{  
+       var[z] = letter;
+	   z++;
+	   y++;
+	   letter = yytext[y];
+	}
+
+    data = hash_get(var);
+	printf("%d", data);
+	printf("\n");
+}
+
 
 int main(int argc, char *argv[])
 {

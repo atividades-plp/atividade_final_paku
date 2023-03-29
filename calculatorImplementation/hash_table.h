@@ -92,8 +92,6 @@ void hash_insert(char name[100], char type[10], int val)
   vetor[n_ind].sinal = 1;
   vetor[n_ind].dados = n_elem;
   tam++;
-  printf("\nInserção da chave %d realizada\n",Gera_chave(name));
-  
 }
 
 /* Função responsável por inserir um elemento cuja chave é a mesma do parâmetro recebido */
@@ -203,7 +201,6 @@ int hash_get(char nom[100])
   int index = Cod_hash(Gera_chave(nom));
   long carac_asc, carac_aux;
   elem * atual = vetor[index].dados;
-  printf("\n\n%d\n\n", atual->valor);
   if (atual ==  NULL)
   {
     printf("Nome inexistente na tabela\n"

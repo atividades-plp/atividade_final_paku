@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 6 "calc.y"
+#line 1 "calc.y"
 
 #define YYSTYPE double
 #include <stdio.h>
@@ -123,9 +123,10 @@ enum yysymbol_kind_t
   YYSYMBOL_P_RIGHT = 10,                   /* P_RIGHT  */
   YYSYMBOL_ATRIBUTION = 11,                /* ATRIBUTION  */
   YYSYMBOL_VAR = 12,                       /* VAR  */
-  YYSYMBOL_YYACCEPT = 13,                  /* $accept  */
-  YYSYMBOL_STATEMENT = 14,                 /* STATEMENT  */
-  YYSYMBOL_EXPRESSION = 15                 /* EXPRESSION  */
+  YYSYMBOL_PRINT_FUNCTION = 13,            /* PRINT_FUNCTION  */
+  YYSYMBOL_YYACCEPT = 14,                  /* $accept  */
+  YYSYMBOL_STATEMENT = 15,                 /* STATEMENT  */
+  YYSYMBOL_EXPRESSION = 16                 /* EXPRESSION  */
 };
 typedef enum yysymbol_kind_t yysymbol_kind_t;
 
@@ -453,19 +454,19 @@ union yyalloc
 /* YYFINAL -- State number of the termination state.  */
 #define YYFINAL  2
 /* YYLAST -- Last index in YYTABLE.  */
-#define YYLAST   37
+#define YYLAST   39
 
 /* YYNTOKENS -- Number of terminals.  */
-#define YYNTOKENS  13
+#define YYNTOKENS  14
 /* YYNNTS -- Number of nonterminals.  */
 #define YYNNTS  3
 /* YYNRULES -- Number of rules.  */
 #define YYNRULES  16
 /* YYNSTATES -- Number of states.  */
-#define YYNSTATES  20
+#define YYNSTATES  21
 
 /* YYMAXUTOK -- Last valid token kind.  */
-#define YYMAXUTOK   267
+#define YYMAXUTOK   268
 
 
 /* YYTRANSLATE(TOKEN-NUM) -- Symbol number corresponding to TOKEN-NUM
@@ -505,15 +506,15 @@ static const yytype_int8 yytranslate[] =
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     2,     2,     2,     2,
        2,     2,     2,     2,     2,     2,     1,     2,     3,     4,
-       5,     6,     7,     8,     9,    10,    11,    12
+       5,     6,     7,     8,     9,    10,    11,    12,    13
 };
 
 #if YYDEBUG
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int8 yyrline[] =
 {
-       0,    33,    33,    34,    38,    39,    40,    41,    42,    43,
-      44,    45,    46,    47,    48,    49,    50
+       0,    28,    28,    29,    33,    34,    35,    36,    37,    38,
+      39,    40,    41,    42,    43,    44,    45
 };
 #endif
 
@@ -531,7 +532,7 @@ static const char *const yytname[] =
 {
   "\"end of file\"", "error", "\"invalid token\"", "NUMBER", "EOL",
   "PLUS", "MINUS", "DIVIDE", "TIMES", "P_LEFT", "P_RIGHT", "ATRIBUTION",
-  "VAR", "$accept", "STATEMENT", "EXPRESSION", YY_NULLPTR
+  "VAR", "PRINT_FUNCTION", "$accept", "STATEMENT", "EXPRESSION", YY_NULLPTR
 };
 
 static const char *
@@ -555,8 +556,9 @@ yysymbol_name (yysymbol_kind_t yysymbol)
    STATE-NUM.  */
 static const yytype_int8 yypact[] =
 {
-      -7,     0,    -7,    -7,    14,    14,    -7,    29,    22,    -7,
-      -7,    14,    14,    14,    14,    -7,    -6,    -6,    -7,    -7
+      -7,     0,    -7,    -7,    15,    15,    -7,    -7,    31,    24,
+      -7,    -7,    15,    15,    15,    15,    -7,    -6,    -6,    -7,
+      -7
 };
 
 /* YYDEFACT[STATE-NUM] -- Default reduction number in state STATE-NUM.
@@ -564,8 +566,9 @@ static const yytype_int8 yypact[] =
    means the default is an error.  */
 static const yytype_int8 yydefact[] =
 {
-       3,    16,     1,     4,    16,    16,    15,     0,     0,    14,
-       2,    16,    16,    16,    16,     9,     5,     6,     8,     7
+       3,     0,     1,     4,     0,     0,    15,    16,     0,     0,
+      14,     2,     0,     0,     0,     0,     9,     5,     6,     8,
+       7
 };
 
 /* YYPGOTO[NTERM-NUM].  */
@@ -577,7 +580,7 @@ static const yytype_int8 yypgoto[] =
 /* YYDEFGOTO[NTERM-NUM].  */
 static const yytype_int8 yydefgoto[] =
 {
-       0,     1,     7
+       0,     1,     8
 };
 
 /* YYTABLE[YYPACT[STATE-NUM]] -- What to do in state STATE-NUM.  If
@@ -585,40 +588,41 @@ static const yytype_int8 yydefgoto[] =
    number is the opposite.  If YYTABLE_NINF, syntax error.  */
 static const yytype_int8 yytable[] =
 {
-       2,    13,    14,     3,     0,     0,     8,     9,     0,     4,
-       0,     5,     6,    16,    17,    18,    19,     3,     0,     0,
-       0,     0,     0,     4,     0,     5,     6,    11,    12,    13,
-      14,     0,    15,    10,    11,    12,    13,    14
+       2,    14,    15,     3,     0,     0,     9,    10,     0,     4,
+       0,     5,     6,     7,    17,    18,    19,    20,     3,     0,
+       0,     0,     0,     0,     4,     0,     5,     6,     7,    12,
+      13,    14,    15,     0,    16,    11,    12,    13,    14,    15
 };
 
 static const yytype_int8 yycheck[] =
 {
        0,     7,     8,     3,    -1,    -1,     4,     5,    -1,     9,
-      -1,    11,    12,    11,    12,    13,    14,     3,    -1,    -1,
-      -1,    -1,    -1,     9,    -1,    11,    12,     5,     6,     7,
-       8,    -1,    10,     4,     5,     6,     7,     8
+      -1,    11,    12,    13,    12,    13,    14,    15,     3,    -1,
+      -1,    -1,    -1,    -1,     9,    -1,    11,    12,    13,     5,
+       6,     7,     8,    -1,    10,     4,     5,     6,     7,     8
 };
 
 /* YYSTOS[STATE-NUM] -- The symbol kind of the accessing symbol of
    state STATE-NUM.  */
 static const yytype_int8 yystos[] =
 {
-       0,    14,     0,     3,     9,    11,    12,    15,    15,    15,
-       4,     5,     6,     7,     8,    10,    15,    15,    15,    15
+       0,    15,     0,     3,     9,    11,    12,    13,    16,    16,
+      16,     4,     5,     6,     7,     8,    10,    16,    16,    16,
+      16
 };
 
 /* YYR1[RULE-NUM] -- Symbol kind of the left-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr1[] =
 {
-       0,    13,    14,    14,    15,    15,    15,    15,    15,    15,
-      15,    15,    15,    15,    15,    15,    15
+       0,    14,    15,    15,    16,    16,    16,    16,    16,    16,
+      16,    16,    16,    16,    16,    16,    16
 };
 
 /* YYR2[RULE-NUM] -- Number of symbols on the right-hand side of rule RULE-NUM.  */
 static const yytype_int8 yyr2[] =
 {
        0,     2,     3,     0,     1,     3,     3,     3,     3,     3,
-       3,     3,     3,     3,     2,     1,     0
+       3,     3,     3,     3,     2,     1,     1
 };
 
 
@@ -1082,85 +1086,91 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* STATEMENT: STATEMENT EXPRESSION EOL  */
-#line 33 "calc.y"
-                                 {yyval = yyvsp[-1]; printf("Resultado: %f\n", yyvsp[-1]);}
-#line 1088 "calc.tab.c"
+#line 28 "calc.y"
+                                 {yyval = yyvsp[-1];}
+#line 1092 "calc.tab.c"
     break;
 
   case 4: /* EXPRESSION: NUMBER  */
-#line 38 "calc.y"
+#line 33 "calc.y"
                {yyval = yyvsp[0];}
-#line 1094 "calc.tab.c"
+#line 1098 "calc.tab.c"
     break;
 
   case 5: /* EXPRESSION: EXPRESSION PLUS EXPRESSION  */
-#line 39 "calc.y"
+#line 34 "calc.y"
                                            {yyval = yyvsp[-2] + yyvsp[0];}
-#line 1100 "calc.tab.c"
+#line 1104 "calc.tab.c"
     break;
 
   case 6: /* EXPRESSION: EXPRESSION MINUS EXPRESSION  */
-#line 40 "calc.y"
+#line 35 "calc.y"
                                             {yyval = yyvsp[-2] - yyvsp[0];}
-#line 1106 "calc.tab.c"
+#line 1110 "calc.tab.c"
     break;
 
   case 7: /* EXPRESSION: EXPRESSION TIMES EXPRESSION  */
-#line 41 "calc.y"
+#line 36 "calc.y"
                                             {yyval = yyvsp[-2] * yyvsp[0];}
-#line 1112 "calc.tab.c"
+#line 1116 "calc.tab.c"
     break;
 
   case 8: /* EXPRESSION: EXPRESSION DIVIDE EXPRESSION  */
-#line 42 "calc.y"
+#line 37 "calc.y"
                                              {yyval = yyvsp[-2] / yyvsp[0];}
-#line 1118 "calc.tab.c"
+#line 1122 "calc.tab.c"
     break;
 
   case 9: /* EXPRESSION: P_LEFT EXPRESSION P_RIGHT  */
-#line 43 "calc.y"
+#line 38 "calc.y"
                                           {yyval = yyvsp[-1];}
-#line 1124 "calc.tab.c"
+#line 1128 "calc.tab.c"
     break;
 
   case 10: /* EXPRESSION: EXPRESSION PLUS EXPRESSION  */
-#line 44 "calc.y"
+#line 39 "calc.y"
                                    {yyval = yyvsp[-2] + yyvsp[0];}
-#line 1130 "calc.tab.c"
+#line 1134 "calc.tab.c"
     break;
 
   case 11: /* EXPRESSION: EXPRESSION MINUS EXPRESSION  */
-#line 45 "calc.y"
+#line 40 "calc.y"
                                             {yyval = yyvsp[-2] - yyvsp[0];}
-#line 1136 "calc.tab.c"
+#line 1140 "calc.tab.c"
     break;
 
   case 12: /* EXPRESSION: EXPRESSION TIMES EXPRESSION  */
-#line 46 "calc.y"
+#line 41 "calc.y"
                                             {yyval = yyvsp[-2] * yyvsp[0];}
-#line 1142 "calc.tab.c"
+#line 1146 "calc.tab.c"
     break;
 
   case 13: /* EXPRESSION: EXPRESSION DIVIDE EXPRESSION  */
-#line 47 "calc.y"
+#line 42 "calc.y"
                                              {yyval = yyvsp[-2] / yyvsp[0];}
-#line 1148 "calc.tab.c"
+#line 1152 "calc.tab.c"
     break;
 
   case 14: /* EXPRESSION: ATRIBUTION EXPRESSION  */
-#line 48 "calc.y"
+#line 43 "calc.y"
                               {yyval = yyvsp[0]; store_value();}
-#line 1154 "calc.tab.c"
+#line 1158 "calc.tab.c"
     break;
 
   case 15: /* EXPRESSION: VAR  */
-#line 49 "calc.y"
+#line 44 "calc.y"
                 { define_variable();}
-#line 1160 "calc.tab.c"
+#line 1164 "calc.tab.c"
+    break;
+
+  case 16: /* EXPRESSION: PRINT_FUNCTION  */
+#line 45 "calc.y"
+                           {print_value();}
+#line 1170 "calc.tab.c"
     break;
 
 
-#line 1164 "calc.tab.c"
+#line 1174 "calc.tab.c"
 
       default: break;
     }
@@ -1353,7 +1363,7 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 52 "calc.y"
+#line 47 "calc.y"
 
 
 void yyerror(char *s)
@@ -1364,61 +1374,81 @@ void yyerror(char *s)
 void define_variable()
 {
     int i, start, end = 0;
+	char nome[100]= "";
 	int e = 0;
-	char nome[100], tipo[10];
-	printf("Declaração: ");
 	for (i = 0; i < yyleng; i++) {
 		if (yytext[i] == ' ') start = i + 1;
 			if (yytext[i] == ':') 
 			{   
 				end = i;
-				continue;
-			}
-			if (end != 0)
-			{
-              tipo[e] = yytext[i];
-			  e++;
+				break;
 			}
 	}
-	e = 0;
-	printf("%s", tipo);
 	for (i = start; i < end; i++) {
+		if (yytext[i] == "\n")
+		  break;
 		nome[e] = yytext[i];
 		e++;
-		printf("%c", yytext[i]);
 	}
-	strcpy(name, nome);
-	hash_insert(nome, tipo, 14);
-	hash_print();
+	hash_insert(nome, "int", 0);
+	e = 0;
+	printf("\n");
 }
 
 void store_value()
 {
-	int i, start, end;
-	char valor[10];
-	int e = 0;
-	printf("Declaração: ");
-	for (i = 0; i < yyleng; i++) {
-		if (yytext[i] == '=') 
-		{
-		  start = i + 1;
-		  break;
-		}
+	int i;
+	char valor[100] = "";
+	char variable_original[100] = "";
+	int e = 0, int_char;
+	for (i = -4; i < yyleng; i = i - 1) {
+            int_char = yytext[i];
+			if ((int_char >= 48) || (int_char == 95) || (int_char >= 65) || (int_char >= 97))
+            {
+              valor[e] = yytext[i];
+			  e++;
+			}
+			else
+			  break;
+
+	for (int x = 0; x < strlen(valor); x++)
+	{
+		variable_original[x] = valor[strlen(valor) - 1 - x];
 	}
-	for (i = start; i < yyleng; i++) {
-		valor[e] = yytext[i];
-		e++;
-		printf("%c", yytext[i]);
-	}
-	
-	printf("Valor atribuído é %s", valor);
-	int val = hash_get(name);
-	hash_update(name, 20);
-	printf("O valor é %d\n", val);
-	hash_print();
-	printf("\n");
-	
+
 }
+    printf("\n");
+	char value[8] = "";
+	e = 0;
+	for (i = 0; i < yyleng; i++) {
+		{
+			value[e] = yytext[i];
+			e++;
+		}
+}
+
+  hash_update(variable_original, atoi(value));
+}
+
+void print_value(){
+
+	int y = 6, z = 0, data;
+	char letter = yytext[y];
+	char var[100] = "";
+
+	while (letter != ')')
+	{  
+       var[z] = letter;
+	   z++;
+	   y++;
+	   letter = yytext[y];
+	}
+
+    data = hash_get(var);
+	printf("%d", data);
+	printf("\n");
+}
+
 
 int main(int argc, char *argv[])
 {
